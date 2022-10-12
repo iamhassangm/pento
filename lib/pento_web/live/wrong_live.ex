@@ -41,7 +41,7 @@ defmodule PentoWeb.WrongLive do
             number: Enum.random(1..10)
         )
     }
-end
+    end
 
 
     def handle_event("guess", %{"number" => guess}=data, socket) do
