@@ -16,8 +16,7 @@ defmodule PentoWeb.WrongLive do
 
     def render(assigns) do
         ~H"""
-        <h1>Your score: <%= @score %></h1><br>
-        <h1>Your number: <%= @number %></h1>
+        <h1>Your score: <%= @score %></h1>
         <h2>
             <%= @message %> <br>
             It's time <%= @time %>
@@ -36,10 +35,12 @@ defmodule PentoWeb.WrongLive do
         random_number = socket.assigns.number
        
         {score, message, random_number} = 
-        if guess_number == random_number do
-            correct_guess(guess_number, socket)
-        else
-            wrong_guess(guess_number, socket)
+        cond do
+            random_number == guess_number ->
+                 correct_guess(guess_number, socket)
+            true  -> 
+                wrong_guess(guess_number, socket)
+
         end
 
         {
