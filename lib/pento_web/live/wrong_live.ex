@@ -17,6 +17,7 @@ defmodule PentoWeb.WrongLive do
     def render(assigns) do
         ~H"""
         <h1>Your score: <%= @score %></h1>
+        <a href="#" phx-click="reset">Reset Score</a>
         <h2>
             <%= @message %> <br>
             It's time <%= @time %>
@@ -28,6 +29,19 @@ defmodule PentoWeb.WrongLive do
         </h2>
         """
     end
+
+    def handle_event("reset", _params, socket) do
+    {
+        :noreply,
+        assign(
+            socket,
+            score: 0,
+            message: "Make a guess:",
+            time: time(),
+            number: Enum.random(1..10)
+        )
+    }
+end
 
 
     def handle_event("guess", %{"number" => guess}=data, socket) do
