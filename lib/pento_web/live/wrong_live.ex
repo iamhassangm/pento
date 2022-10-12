@@ -37,23 +37,9 @@ defmodule PentoWeb.WrongLive do
        
         {score, message, random_number} = 
         if guess_number == random_number do
-            message = "Your guess: #{guess}. Correct! "
-            score = socket.assigns.score + 1
-            random_number = Enum.random(1..10)
-
-            {
-               score,
-               message,
-               random_number
-            }
+            correct_guess(guess_number, socket)
         else
-            message = "Your guess: #{guess}. Wrong. Guess again. "
-            score = socket.assigns.score - 1
-            {
-               score,
-               message,
-               random_number
-            }
+            wrong_guess(guess_number, socket)
         end
 
         {
@@ -67,6 +53,28 @@ defmodule PentoWeb.WrongLive do
         }
     end
 
+    def correct_guess(guess, socket) do
+        message = "Your guess: #{guess}. Correct! "
+        score = socket.assigns.score + 1
+        random_number = Enum.random(1..10)
+
+        {
+           score,
+           message,
+           random_number
+        }
+    end
+
+    def wrong_guess(guess, socket) do
+        message = "Your guess: #{guess}. Wrong. Guess again. "
+        score = socket.assigns.score - 1
+        random_number = socket.assigns.number
+        {
+            score,
+            message,
+            random_number
+        }
+    end
 
 
     def time() do
