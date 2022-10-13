@@ -122,6 +122,20 @@ defmodule PentoWeb.UserAuth do
   end
 
   @doc """
+  Used to redirect authenticated user to specified path
+  """
+  def redirect_to_guess_if_user_authenticated(conn, _opts) do
+    IO.inspect(conn.request_path, label: "CONN REQUEST PATH: ")
+    if conn.assigns[:current_user] && conn.request_path == "/" do
+      conn
+      |> redirect(to: "/guess")
+      |> halt()
+    else
+      conn
+    end
+  end
+
+  @doc """
   Used for routes that require the user to be authenticated.
 
   If you want to enforce the user email is confirmed before

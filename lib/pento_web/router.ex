@@ -11,6 +11,7 @@ defmodule PentoWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
+    plug :redirect_to_guess_if_user_authenticated
   end
 
   pipeline :api do
@@ -78,7 +79,7 @@ defmodule PentoWeb.Router do
     live_session :default, on_mount: PentoWeb.UserAuthLive do
       live "/guess", WrongLive
     end
-    
+
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
