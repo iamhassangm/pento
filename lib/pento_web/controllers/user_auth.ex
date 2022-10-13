@@ -122,13 +122,12 @@ defmodule PentoWeb.UserAuth do
   end
 
   @doc """
-  Used to redirect authenticated user to specified path
+  Used to redirect authenticated user to specified path when the given request path matches
   """
-  def redirect_to_guess_if_user_authenticated(conn, _opts) do
-    IO.inspect(conn.request_path, label: "CONN REQUEST PATH: ")
-    if conn.assigns[:current_user] && conn.request_path == "/" do
+  def redirect_to_if_user_authenticated(conn, %{:request_path => request_path, :to => to}) do
+    if conn.assigns[:current_user] && conn.request_path == request_path do
       conn
-      |> redirect(to: "/guess")
+      |> redirect(to: to)
       |> halt()
     else
       conn
